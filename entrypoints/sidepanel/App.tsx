@@ -1,18 +1,18 @@
-import type { LucideIcon } from 'lucide-solid'
 import {
-  ArrowLeft,
-  Check,
-  ChevronRight,
-  Circle,
-  LoaderCircle,
-  TriangleAlert,
-  X,
-} from 'lucide-solid'
+  Alert02Icon,
+  ArrowLeft02Icon,
+  ArrowRight01Icon,
+  Cancel01Icon,
+  CircleIcon,
+  LoaderCircleIcon,
+  Tick02Icon,
+} from '@hugeicons/core-free-icons'
 import type { JSX } from 'solid-js'
 import { createSignal, For, onMount, Show } from 'solid-js'
 import { createStore } from 'solid-js/store'
-import { Dynamic } from 'solid-js/web'
 import type { ExportResult } from './export'
+import type { IconData } from './Icon'
+import { Icon } from './Icon'
 import type { Source } from './sources'
 import { SOURCES } from './sources'
 
@@ -55,11 +55,11 @@ function download(json: string, fileName: string) {
   URL.revokeObjectURL(link.href)
 }
 
-const STATE_ICONS: Record<StepState, LucideIcon> = {
-  pending: Circle,
-  active: LoaderCircle,
-  done: Check,
-  failed: X,
+const STATE_ICONS: Record<StepState, IconData> = {
+  pending: CircleIcon,
+  active: LoaderCircleIcon,
+  done: Tick02Icon,
+  failed: Cancel01Icon,
 }
 const STATE_COLORS: Record<StepState, string> = {
   pending: '',
@@ -68,12 +68,12 @@ const STATE_COLORS: Record<StepState, string> = {
   failed: 'text-red-700 dark:text-red-300',
 }
 
-function StateIcon(props: { state: StepState; failedIcon?: LucideIcon; class?: string }) {
+function StateIcon(props: { state: StepState; failedIcon?: IconData; class?: string }) {
   const icon = () =>
     props.state === 'failed' && props.failedIcon ? props.failedIcon : STATE_ICONS[props.state]
   return (
-    <Dynamic
-      component={icon()}
+    <Icon
+      icon={icon()}
       class={`size-4.5 shrink-0 ${STATE_COLORS[props.state]} ${props.class ?? ''}`}
     />
   )
@@ -140,7 +140,7 @@ function Account(props: {
         'bg-red-50 text-red-700 dark:bg-red-950 dark:text-red-300': failed(),
       }}
     >
-      <StateIcon state={props.state} failedIcon={TriangleAlert} class="mt-px" />
+      <StateIcon state={props.state} failedIcon={Alert02Icon} class="mt-px" />
       <div class="flex flex-1 flex-col gap-2">
         <span>
           <Show when={failed()} fallback={props.text}>
@@ -164,7 +164,7 @@ function Account(props: {
 function ErrorBox(props: { text: string }) {
   return (
     <p class="flex gap-2 rounded-lg bg-red-50 px-3 py-2.5 text-red-700 dark:bg-red-950 dark:text-red-300">
-      <TriangleAlert class="mt-px size-4.5 shrink-0" />
+      <Icon icon={Alert02Icon} class="mt-px size-4.5 shrink-0" />
       {props.text}
     </p>
   )
@@ -224,7 +224,7 @@ function SourceButton(props: { source: Source; onClick: () => void }) {
       onClick={() => props.onClick()}
     >
       <span class="flex-1 font-medium">{props.source.name}</span>
-      <ChevronRight class={`size-4.5 shrink-0 ${MUTED}`} />
+      <Icon icon={ArrowRight01Icon} class={`size-4.5 shrink-0 ${MUTED}`} />
     </button>
   )
 }
@@ -325,7 +325,7 @@ export function App() {
             aria-label="Back to the list of sites"
             onClick={back}
           >
-            <ArrowLeft class="size-4.5" />
+            <Icon icon={ArrowLeft02Icon} class="size-4.5" />
           </button>
         </Show>
         <h1 class="text-lg font-semibold">{text().heading}</h1>
@@ -353,7 +353,7 @@ export function App() {
           <For each={source().steps.filter(({ icon }) => icon != null)}>
             {({ icon, label }) => (
               <li class={ROW}>
-                <Dynamic component={icon} class="size-4.5 shrink-0" />
+                <Icon icon={icon!} class="size-4.5 shrink-0" />
                 {label}
               </li>
             )}

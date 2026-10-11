@@ -11,9 +11,9 @@ importers:
       '@fontsource-variable/rubik':
         specifier: 5.3.0
         version: 5.3.0
-      lucide-solid:
-        specifier: 1.52.0
-        version: 1.52.0(solid-js@1.9.15)
+      '@hugeicons/core-free-icons':
+        specifier: 4.3.5
+        version: 4.3.5
       solid-js:
         specifier: 1.9.15
         version: 1.9.15
@@ -206,6 +206,9 @@ packages:
   '@fregante/relaxed-json@2.0.0':
     resolution: {integrity: sha512-PyUXQWB42s4jBli435TDiYuVsadwRHnMc27YaLouINktvTWsL3FcKrRMGawTayFk46X+n5bE23RjUTWQwrukWw==}
     engines: {node: '>= 0.10.0'}
+
+  '@hugeicons/core-free-icons@4.3.5':
+    resolution: {integrity: sha512-Sv+NjHRPnQk+yZsGCMcGznCHdTfJR9PMMOEKcJYAQU4gy90dmlc9PwdtvYOImBZIjiheMsTLL5eMn2DmHxUiUg==}
 
   '@humanfs/core@0.19.2':
     resolution: {integrity: sha512-UhXNm+CFMWcbChXywFwkmhqjs3PRCmcSa/hfBgLIb7oQ5HNb1wS0icWsGtSAUNgefHeI+eBrA8I1fxmbHsGdvA==}
@@ -1529,11 +1532,6 @@ packages:
   lru-cache@5.1.1:
     resolution: {integrity: sha512-KpNARQA3Iwv+jTA0utUVVbrh+Jlrr1Fv0e56GGzAFOXN7dk/FviaDW8LHmK52DlcH4WP2n6gI8vN1aesBFgo9w==}
 
-  lucide-solid@1.52.0:
-    resolution: {integrity: sha512-uesU2FyxqeSmPNxdMkbjL20ZpTEu1U0WS3kXXsuPrd3aku8vVyPmz9+/d1PO8G6PvKKVaVH3MDZmL5gLO6kYSg==}
-    peerDependencies:
-      solid-js: ^1.4.7
-
   magic-string@0.30.21:
     resolution: {integrity: sha512-vd2F4YUyEXKGcLHoq+TEyCjxueSeHnFxyyjNp80yg0XV4vUhnDer/lvvlqM/arB5bXQN5K2/3oinyCRyx8T2CQ==}
 
@@ -2510,6 +2508,8 @@ snapshots:
   '@fontsource-variable/rubik@5.3.0': {}
 
   '@fregante/relaxed-json@2.0.0': {}
+
+  '@hugeicons/core-free-icons@4.3.5': {}
 
   '@humanfs/core@0.19.2':
     dependencies:
@@ -3683,10 +3683,6 @@ snapshots:
   lru-cache@5.1.1:
     dependencies:
       yallist: 3.1.1
-
-  lucide-solid@1.52.0(solid-js@1.9.15):
-    dependencies:
-      solid-js: 1.9.15
 
   magic-string@0.30.21:
     dependencies:

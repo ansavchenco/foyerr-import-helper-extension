@@ -1,8 +1,14 @@
-import type { LucideIcon } from 'lucide-solid'
-import { CalendarCheck, Clock, Eye, Heart, Star } from 'lucide-solid'
+import {
+  Calendar03Icon,
+  Clock01Icon,
+  FavouriteIcon,
+  StarIcon,
+  ViewIcon,
+} from '@hugeicons/core-free-icons'
 import { fetchUserId } from '@/utils/kinopoisk'
 import { fetchUsername } from '@/utils/letterboxd'
 import type { ExportResult, OnStep } from './export'
+import type { IconData } from './Icon'
 import * as kinopoisk from './kinopoisk-library'
 import * as letterboxd from './letterboxd-library'
 
@@ -17,7 +23,7 @@ export interface Source {
    * The steps of the export, named after the pages of the site. The ready view
    * lists the steps that have an icon, and the TMDB step has none.
    */
-  steps: { step: string; label: string; icon?: LucideIcon }[]
+  steps: { step: string; label: string; icon?: IconData }[]
   /** The lists of the file that the done view counts. */
   stats: { key: string; label: string }[]
   /** Returns the account that `exportLibrary` takes, and the text that shows it. */
@@ -36,9 +42,9 @@ export const SOURCES: Source[] = [
     url: 'https://letterboxd.com/',
     fileName: 'letterboxd-library.json',
     steps: [
-      { step: 'diary', label: 'Diary', icon: CalendarCheck },
-      { step: 'films', label: 'Films', icon: Eye },
-      { step: 'watchlist', label: 'Watchlist', icon: Clock },
+      { step: 'diary', label: 'Diary', icon: Calendar03Icon },
+      { step: 'films', label: 'Films', icon: ViewIcon },
+      { step: 'watchlist', label: 'Watchlist', icon: Clock01Icon },
       { step: 'tmdb', label: 'TMDB IDs' },
     ],
     stats: [
@@ -59,10 +65,10 @@ export const SOURCES: Source[] = [
     url: 'https://www.kinopoisk.ru/',
     fileName: 'kinopoisk-library.json',
     steps: [
-      { step: 'watched', label: 'Watches', icon: Eye },
-      { step: 'ratings', label: 'Ratings', icon: Star },
-      { step: 'watchlist', label: 'Watchlist', icon: Clock },
-      { step: 'favorites', label: 'Favorites', icon: Heart },
+      { step: 'watched', label: 'Watches', icon: ViewIcon },
+      { step: 'ratings', label: 'Ratings', icon: StarIcon },
+      { step: 'watchlist', label: 'Watchlist', icon: Clock01Icon },
+      { step: 'favorites', label: 'Favorites', icon: FavouriteIcon },
       { step: 'tmdb', label: 'TMDB IDs' },
     ],
     stats: [
