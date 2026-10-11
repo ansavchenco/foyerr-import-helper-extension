@@ -1,14 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
-  <rect x="4" y="4" width="120" height="120" rx="28" fill="#1f1f1f"/>
-  <defs>
-    <clipPath id="clapper">
-      <path d="M24 42 98 26a3 3 0 0 1 3.6 2.3l2.2 10.2a3 3 0 0 1-2.3 3.6L27.5 58z"/>
-    </clipPath>
-  </defs>
-  <g clip-path="url(#clapper)">
-    <path d="M24 42 98 26l6 16-76 16z" fill="#ff6600"/>
-    <path d="M44 34l10 16h10L54 32zM70 28l10 16h10L80 26z" fill="#1f1f1f"/>
-  </g>
-  <path d="M24 62h80v34a10 10 0 0 1-10 10H34a10 10 0 0 1-10-10z" fill="#fff"/>
-  <path d="M64 70v24M53 84l11 11 11-11" fill="none" stroke="#1f1f1f" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+  <rect width="1024" height="1024" rx="303" fill="#E2DCDE"/>
+  <path transform="translate(-90 -2) scale(0.72)" fill="#76476F" d="M295.788 363.26C336.881 228.474 415.6 128.09 555.699 112.976C626.345 105.355 710.321 100.944 733.785 150.278C775.714 259.176 695.28 322.349 618.27 372.887C541.259 423.425 540.056 460.126 565.325 493.818C590.594 527.51 609.847 533.526 665.8 518.485C710.321 510.653 719.551 510.357 733.785 533.526C748.954 558.216 722.354 594.714 710.321 603.919C603.229 685.141 692.272 754.931 715.736 834.95C739.2 914.969 695.28 916.774 695.28 916.774C578.561 923.392 414.381 820.376 336.7 668.897C281.749 561.742 260.67 478.449 295.788 363.26Z"/>
+  <circle cx="721" cy="721" r="279" fill="#E2DCDE"/>
+  <circle cx="721" cy="721" r="255" fill="#76476F"/>
+  <path d="M721 593V836M624 739l97 97 97-97" fill="none" stroke="#E2DCDE" stroke-width="66" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
