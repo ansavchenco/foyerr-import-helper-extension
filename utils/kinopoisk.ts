@@ -141,11 +141,12 @@ async function fetchHtml(url: string, signal: AbortSignal) {
   if (new URL(response.url).hostname.endsWith('passport.yandex.ru')) {
     throw new Error('Open kinopoisk.ru and sign in, then try again.')
   }
-  if (!response.ok) {
-    throw new Error(`Kinopoisk returned error ${response.status}. Try again later.`)
-  }
+  // The captcha page can come with an error status, so it goes before the status check.
   if (response.url.includes('showcaptcha')) {
     throw new Error('Kinopoisk shows a captcha. Open kinopoisk.ru, solve it, then try again.')
+  }
+  if (!response.ok) {
+    throw new Error(`Kinopoisk returned error ${response.status}. Try again later.`)
   }
   const html = await response.text()
   await new Promise((resolve) => setTimeout(resolve, REQUEST_DELAY_MS))

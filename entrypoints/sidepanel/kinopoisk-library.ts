@@ -2,25 +2,9 @@ import type { KinopoiskTitle } from '@/utils/kinopoisk'
 import { fetchList, fetchUserId, fetchVotesList, parseFolderPage } from '@/utils/kinopoisk'
 import type { TmdbIds } from '@/utils/wikidata'
 import { fetchTmdbIds, fetchTmdbIdsByTitle } from '@/utils/wikidata'
+import type { ExportResult, OnStep } from './export'
 
 export type Step = 'watched' | 'ratings' | 'watchlist' | 'favorites' | 'tmdb'
-
-/**
- * Tells the side panel how the export goes. `count` is "12 of 558" while a
- * step runs and the number of titles when it is done.
- */
-export type OnStep = (step: Step, state: 'active' | 'done', count?: string) => void
-
-export interface ExportResult {
-  library: {
-    ratings: unknown[]
-    seen: unknown[]
-    watchlist: unknown[]
-    favorites: unknown[]
-  }
-  /** The titles that have no TMDB ID. */
-  missing: KinopoiskTitle[]
-}
 
 /**
  * Adds the TMDB ID to a title. `tmdbId` is `null` when Wikidata does not have
@@ -49,7 +33,7 @@ function withTmdbId<T extends KinopoiskTitle>(item: T, tmdbIds: Map<string, Tmdb
 /** Fetches the library of the user from Kinopoisk and the TMDB IDs from Wikidata. */
 export async function exportLibrary(
   userId: string | null,
-  onStep: OnStep,
+  onStep: OnStep<Step>,
   signal: AbortSignal
 ): Promise<ExportResult> {
   /** Starts a step and returns the function that shows its progress. */
@@ -108,6 +92,8 @@ export async function exportLibrary(
       watchlist: watchlist.map((item) => withTmdbId(item, tmdbIds)),
       favorites: favorites.map((item) => withTmdbId(item, tmdbIds)),
     },
-    missing: [...titles.values()].filter(hasNoTmdbId),
+    missing: [...titles.values()]
+      .filter(hasNoTmdbId)
+      .map((item) => ({ title: item.originalTitle ?? item.title, year: item.year })),
   }
 }

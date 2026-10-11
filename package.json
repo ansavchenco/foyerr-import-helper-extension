@@ -1,6 +1,6 @@
 {
   "name": "kinopoisk-export-ext",
-  "description": "Exports your Kinopoisk library to a file.",
+  "description": "Exports your Kinopoisk or Letterboxd library to a file importable to Foyerr.",
   "private": true,
   "version": "1.1.1",
   "type": "module",

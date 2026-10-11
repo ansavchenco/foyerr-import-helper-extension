@@ -1,19 +1,20 @@
-# Privacy Policy for Kinopoisk Export
+# Privacy Policy for Foyerr Import Helper
 
-Effective date: October 3, 2026
+Effective date: October 11, 2026
 
-Kinopoisk Export is a browser extension that exports a user’s Kinopoisk ratings, watched titles, watch later list, and favorites to a JSON file.
+Foyerr Import Helper is a browser extension that exports a user’s Kinopoisk ratings, watched titles, watch later list, and favorites, or a user’s Letterboxd diary, ratings, watched films, and watchlist, to a JSON file.
 
 ## Data handled by the extension
 
 To perform an export, the extension processes:
 
-- the numeric identifier of the signed-in Kinopoisk account;
+- the numeric identifier of the signed-in Kinopoisk account, or the username of the signed-in Letterboxd account;
 - the user’s Kinopoisk ratings, watched status, watch later list, favorites, and associated dates;
-- title information including names, years, media types, and Kinopoisk IDs;
-- the user’s existing Kinopoisk authentication session, which the browser automatically supplies to Kinopoisk.
+- the user’s Letterboxd diary entries, ratings, watched films, watchlist, and associated dates, including the watchlist CSV that Letterboxd offers on the watchlist page;
+- title information including names, years, media types, Kinopoisk IDs, and Letterboxd film identifiers;
+- the user’s existing Kinopoisk or Letterboxd authentication session, which the browser automatically supplies to that site.
 
-The extension does not ask for or read the user’s Kinopoisk password. It does not inspect, copy, export, or store authentication cookie values.
+The extension does not ask for or read the user’s Kinopoisk or Letterboxd password. It does not inspect, copy, export, or store authentication cookie values.
 
 ## How the data is used
 
@@ -29,11 +30,15 @@ The extension communicates with:
 
    Requests to Kinopoisk retrieve the user’s own library pages using the browser’s existing signed-in session.
 
-2. Wikidata Query Service at https://query.wikidata.org
+2. Letterboxd at https://letterboxd.com
 
-   The extension sends Kinopoisk title IDs and, when necessary, title names and years to find corresponding TMDB IDs. It does not send the user’s Kinopoisk account ID, ratings, watched dates, list membership, or Kinopoisk authentication cookies to Wikidata.
+   Requests to Letterboxd retrieve the user’s own diary, films, and watchlist pages and the watchlist CSV using the browser’s existing signed-in session. For films that Wikidata does not identify, the extension also retrieves the public page of the film to read its TMDB ID.
 
-Network requests use HTTPS. The privacy practices of Kinopoisk and the Wikimedia Foundation apply to information received by their respective services.
+3. Wikidata Query Service at https://query.wikidata.org
+
+   The extension sends Kinopoisk title IDs or Letterboxd film identifiers and, for Kinopoisk, when necessary, title names and years to find corresponding TMDB IDs. It does not send the user’s account ID or username, ratings, watched dates, list membership, or authentication cookies to Wikidata.
+
+Network requests use HTTPS. The privacy practices of Kinopoisk, Letterboxd, and the Wikimedia Foundation apply to information received by their respective services.
 
 ## Storage and retention
 
@@ -47,11 +52,11 @@ The extension does not use Chrome storage for the exported library and does not 
 
 ## Sale and unrelated use of data
 
-Kinopoisk Export does not sell user data.
+Foyerr Import Helper does not sell user data.
 
 It does not use or transfer user data for purposes unrelated to its single purpose. It does not use or transfer user data to determine creditworthiness or for lending purposes.
 
-Kinopoisk Export’s use and transfer of information obtained through browser permissions complies with the Chrome Web Store User Data Policy, including its Limited Use requirements.
+Foyerr Import Helper’s use and transfer of information obtained through browser permissions complies with the Chrome Web Store User Data Policy, including its Limited Use requirements.
 
 ## User choices
 

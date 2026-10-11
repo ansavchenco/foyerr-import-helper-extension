@@ -11,7 +11,8 @@ type Row = Record<string, { value: string } | undefined>
 
 const BATCH_SIZE = 200
 
-// P2603 is the Kinopoisk ID, P4947 the TMDB movie ID, P4983 the TMDB series ID.
+// P2603 is the Kinopoisk ID, P6127 the Letterboxd film ID, P4947 the TMDB movie ID and P4983
+// the TMDB series ID.
 async function runQuery(query: string, signal: AbortSignal): Promise<Row[]> {
   let response: Response
   try {
@@ -34,24 +35,25 @@ async function runQuery(query: string, signal: AbortSignal): Promise<Row[]> {
 }
 
 /**
- * Looks up the TMDB IDs of Kinopoisk IDs in Wikidata. A Kinopoisk ID that
- * Wikidata does not have is not in the returned map.
+ * Looks up the TMDB IDs of the items that have one of `ids` as the value of the
+ * Wikidata property. An ID that Wikidata does not have is not in the returned map.
  */
-export async function fetchTmdbIds(
-  kinopoiskIds: string[],
+async function fetchTmdbIdsByProperty(
+  property: string,
+  ids: string[],
   signal: AbortSignal
 ): Promise<Map<string, TmdbIds>> {
   const result = new Map<string, TmdbIds>()
 
-  for (let start = 0; start < kinopoiskIds.length; start += BATCH_SIZE) {
-    const values = kinopoiskIds
+  for (let start = 0; start < ids.length; start += BATCH_SIZE) {
+    const values = ids
       .slice(start, start + BATCH_SIZE)
-      .map((id) => `"${id}"`)
+      .map((id) => JSON.stringify(id))
       .join(' ')
     const rows = await runQuery(
-      `SELECT ?kp ?movie ?tv WHERE {
-      VALUES ?kp { ${values} }
-      ?item wdt:P2603 ?kp .
+      `SELECT ?id ?movie ?tv WHERE {
+      VALUES ?id { ${values} }
+      ?item wdt:${property} ?id .
       OPTIONAL { ?item wdt:P4947 ?movie }
       OPTIONAL { ?item wdt:P4983 ?tv }
     }`,
@@ -59,15 +61,25 @@ export async function fetchTmdbIds(
     )
 
     for (const row of rows) {
-      const kinopoiskId = row.kp!.value
-      const ids = result.get(kinopoiskId) ?? {}
-      if (row.movie) ids.movie = row.movie.value
-      if (row.tv) ids.tv = row.tv.value
-      result.set(kinopoiskId, ids)
+      const id = row.id!.value
+      const tmdbIds = result.get(id) ?? {}
+      if (row.movie) tmdbIds.movie = row.movie.value
+      if (row.tv) tmdbIds.tv = row.tv.value
+      result.set(id, tmdbIds)
     }
   }
 
   return result
+}
+
+/** Looks up the TMDB IDs of Kinopoisk IDs in Wikidata. */
+export function fetchTmdbIds(kinopoiskIds: string[], signal: AbortSignal) {
+  return fetchTmdbIdsByProperty('P2603', kinopoiskIds, signal)
+}
+
+/** Looks up the TMDB IDs of Letterboxd film slugs, like `interstellar`, in Wikidata. */
+export function fetchTmdbIdsByLetterboxdSlug(slugs: string[], signal: AbortSignal) {
+  return fetchTmdbIdsByProperty('P6127', slugs, signal)
 }
 
 /** Lets "Ёлки" and "елки" compare as the same title. */
