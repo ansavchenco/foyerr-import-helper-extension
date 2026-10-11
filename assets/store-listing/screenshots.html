@@ -3,12 +3,25 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Kinopoisk Export store screenshots</title>
+    <title>Foyerr Import Helper store screenshots</title>
+    <!--
+      Chrome Web Store screenshots, 1280×800. Open with ?shot=pick, letterboxd-progress,
+      letterboxd-done or kinopoisk-ready and screenshot the page at that size.
+    -->
     <style>
       @font-face {
         font-family: Rubik;
         src: url('../../node_modules/@fontsource-variable/rubik/files/rubik-latin-wght-normal.woff2');
         font-weight: 300 900;
+        unicode-range:
+          U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308,
+          U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+      }
+      @font-face {
+        font-family: Rubik;
+        src: url('../../node_modules/@fontsource-variable/rubik/files/rubik-cyrillic-wght-normal.woff2');
+        font-weight: 300 900;
+        unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
       }
 
       * {
@@ -26,8 +39,8 @@
           Rubik,
           -apple-system,
           BlinkMacSystemFont,
-          'Segoe UI',
           sans-serif;
+        font-weight: 375;
         color: #171717;
       }
       button {
@@ -40,152 +53,104 @@
         overflow: hidden;
         background: #ebe8e1;
       }
-
       .browser {
         width: 100%;
         height: 100%;
         background: white;
       }
 
-      .chrome {
-        height: 88px;
-        color: #424242;
-        background: #eeeae4;
-        border-bottom: 1px solid #d8d3cb;
-      }
-
-      .tabbar {
-        height: 40px;
-        display: flex;
-        align-items: end;
-        padding: 6px 14px 0;
-        gap: 7px;
-      }
-
-      .traffic {
-        display: flex;
-        gap: 8px;
-        align-self: center;
-        margin: 0 15px 5px 1px;
-      }
-      .traffic i {
-        display: block;
-        width: 12px;
-        height: 12px;
-        border-radius: 50%;
-      }
-      .traffic i:nth-child(1) {
-        background: #ff5f57;
-      }
-      .traffic i:nth-child(2) {
-        background: #febc2e;
-      }
-      .traffic i:nth-child(3) {
-        background: #28c840;
-      }
-
-      .tab {
-        width: 250px;
-        height: 34px;
-        display: flex;
-        align-items: center;
-        gap: 9px;
-        padding: 0 13px;
-        border-radius: 10px 10px 0 0;
-        background: white;
-        font-size: 13px;
-        box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.03);
-      }
-
-      .tab img {
-        width: 17px;
-        height: 17px;
-      }
-      .tab .x {
-        margin-left: auto;
-        color: #777;
-        font-size: 18px;
-      }
-      .new-tab {
-        align-self: center;
-        margin: 0 0 5px 6px;
-        font-size: 22px;
-        color: #676767;
-      }
-
-      .omnibar-row {
-        height: 48px;
-        display: flex;
-        align-items: center;
-        padding: 0 15px;
-        gap: 14px;
-      }
-
-      .nav {
-        font-size: 22px;
-        color: #6b6b6b;
-        letter-spacing: 8px;
-        white-space: nowrap;
-      }
-      .omnibar {
-        flex: 1;
-        height: 34px;
-        border-radius: 18px;
-        background: #fff;
-        display: flex;
-        align-items: center;
-        padding: 0 15px;
-        font-size: 13px;
-        color: #666;
-        box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.025);
-      }
-      .lock {
-        margin-right: 10px;
-        color: #737373;
-      }
-      .toolbar-icon {
-        width: 29px;
-        height: 29px;
-        border-radius: 8px;
-        display: grid;
-        place-items: center;
-        background: #ded9d1;
-      }
-      .toolbar-icon img {
-        width: 22px;
-        height: 22px;
-      }
-      .avatar {
-        width: 28px;
-        height: 28px;
-        border-radius: 50%;
-        background: #202020;
-        color: white;
-        display: grid;
-        place-items: center;
-        font-size: 12px;
-      }
-
       .content {
-        height: calc(100% - 88px);
+        height: 100%;
         display: flex;
       }
       .site {
         flex: 1;
         min-width: 0;
-        background: #f7f6f3;
         position: relative;
         overflow: hidden;
       }
-      .site::after {
-        content: '';
-        position: absolute;
-        inset: 0;
-        pointer-events: none;
-        background: linear-gradient(90deg, transparent 74%, rgba(247, 246, 243, 0.75));
+
+      /* Letterboxd page */
+      .site.letterboxd {
+        background: #14181c;
+        color: #9ab;
+      }
+      .lb-header {
+        height: 70px;
+        padding: 0 54px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: #14181c;
+        border-bottom: 1px solid #2c3440;
+      }
+      .lb-brand {
+        color: #fff;
+        font-size: 22px;
+        font-weight: 600;
+        letter-spacing: -0.3px;
+      }
+      .lb-nav {
+        display: flex;
+        gap: 24px;
+        color: #9ab;
+        font-size: 13px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+      .lb-page {
+        padding: 34px 54px;
+      }
+      .lb-page h2 {
+        margin: 0 0 6px;
+        color: #fff;
+        font-size: 26px;
+        font-weight: 500;
+      }
+      .lb-tabs {
+        display: flex;
+        gap: 20px;
+        margin: 14px 0 18px;
+        font-size: 13px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+      .lb-tabs .active {
+        color: #fff;
+      }
+      .diary-row {
+        display: grid;
+        grid-template-columns: 56px 42px 1fr 80px 110px;
+        align-items: center;
+        gap: 14px;
+        padding: 10px 4px;
+        border-top: 1px solid #2c3440;
+        font-size: 14px;
+      }
+      .diary-day {
+        color: #fff;
+        font-size: 22px;
+        text-align: center;
+      }
+      .diary-row .poster {
+        width: 38px;
+        height: 56px;
+        border-radius: 3px;
+      }
+      .diary-row b {
+        color: #fff;
+        font-weight: 500;
+      }
+      .stars {
+        color: #00c030;
+        letter-spacing: 1px;
       }
 
-      .site-header {
+      /* Kinopoisk page */
+      .site.kinopoisk {
+        background: #f7f6f3;
+      }
+      .kp-header {
         height: 70px;
         padding: 0 44px;
         display: flex;
@@ -196,20 +161,19 @@
       }
       .kp-brand {
         font-size: 22px;
-        font-weight: 750;
+        font-weight: 700;
         letter-spacing: -0.5px;
       }
       .kp-brand i {
         font-style: normal;
         color: #ff6b00;
       }
-      .site-nav {
+      .kp-nav {
         display: flex;
         gap: 24px;
         color: #b8b8b8;
         font-size: 13px;
       }
-
       .library {
         padding: 34px 54px;
         max-width: 870px;
@@ -219,11 +183,12 @@
         text-transform: uppercase;
         font-size: 11px;
         letter-spacing: 1.5px;
-        font-weight: 700;
+        font-weight: 600;
       }
       .library h2 {
         margin: 7px 0 6px;
         font-size: 30px;
+        font-weight: 500;
         letter-spacing: -0.8px;
       }
       .library-lead {
@@ -247,125 +212,90 @@
         color: white;
         background: #202020;
       }
-
-      .movie-list {
-        border-top: 1px solid #ddd9d1;
-      }
       .movie {
         display: grid;
         grid-template-columns: 42px 1fr auto;
         align-items: center;
         gap: 14px;
         padding: 12px 4px;
-        border-bottom: 1px solid #ddd9d1;
+        border-top: 1px solid #ddd9d1;
       }
-      .poster {
+      .movie .poster {
         width: 38px;
         height: 50px;
         border-radius: 4px;
-        background: linear-gradient(145deg, #303030, #ff6b00);
-      }
-      .movie:nth-child(2) .poster {
-        background: linear-gradient(145deg, #b68f63, #202020);
-      }
-      .movie:nth-child(3) .poster {
-        background: linear-gradient(145deg, #25394a, #7899a8);
-      }
-      .movie:nth-child(4) .poster {
-        background: linear-gradient(145deg, #531a16, #e6a447);
-      }
-      .movie:nth-child(5) .poster {
-        background: linear-gradient(145deg, #1f211f, #78836c);
       }
       .movie b {
         display: block;
         font-size: 14px;
+        font-weight: 500;
         margin-bottom: 4px;
       }
       .movie small {
         color: #838383;
         font-size: 12px;
       }
-      .rating {
+      .kp-rating {
         width: 32px;
         height: 32px;
         border-radius: 50%;
         display: grid;
         place-items: center;
-        background: #202020;
+        background: #3bb33b;
         color: white;
-        font-weight: 750;
+        font-weight: 600;
         font-size: 13px;
       }
 
+      /* Side panel, drawn after entrypoints/sidepanel/App.tsx */
       .side-panel {
         width: 386px;
         flex: none;
-        position: relative;
         background: #fff;
         border-left: 1px solid #d7d7d7;
         box-shadow: -12px 0 35px rgba(0, 0, 0, 0.09);
       }
-      .panel-top {
-        height: 44px;
-        display: flex;
-        align-items: center;
-        padding: 0 15px;
-        border-bottom: 1px solid #e5e5e5;
-        font-size: 12px;
-        color: #666;
-      }
-      .panel-top img {
-        width: 24px;
-        height: 24px;
-        margin-right: 9px;
-      }
-      .panel-top b {
-        color: #262626;
-        font-size: 13px;
-      }
-      .panel-top .close {
-        margin-left: auto;
-        font-size: 19px;
-        color: #777;
-      }
-
       .panel {
-        height: calc(100% - 44px);
+        height: 100%;
         display: flex;
         flex-direction: column;
-        gap: 14px;
-        padding: 22px 20px 20px;
+        gap: 12px;
+        padding: 16px;
         font-size: 14px;
+        line-height: 1.43;
+      }
+      .panel header {
+        display: flex;
+        align-items: center;
+        gap: 4px;
       }
       .panel h1 {
         margin: 0;
-        font-size: 19px;
-        line-height: 1.25;
-        font-weight: 650;
-        letter-spacing: -0.25px;
+        font-size: 18px;
+        line-height: 1.55;
+        font-weight: 450;
+      }
+      .back {
+        margin-left: -6px;
+        padding: 4px;
+        color: #737373;
+        display: grid;
+      }
+      .muted {
+        color: #737373;
       }
       .lead {
-        margin: -4px 0 0;
-        color: #737373;
-        line-height: 1.45;
+        margin: 0;
       }
-      .account {
-        display: flex;
-        align-items: flex-start;
-        gap: 9px;
-        padding: 11px 12px;
-        border-radius: 9px;
-        background: #f3f3f3;
-        line-height: 1.35;
-      }
-      .mark {
+      .icon {
         width: 18px;
         height: 18px;
         flex: none;
-        display: grid;
-        place-items: center;
-        font-weight: 800;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
       }
       .green {
         color: #16a34a;
@@ -373,65 +303,10 @@
       .blue {
         color: #2563eb;
       }
-      .muted {
-        color: #a3a3a3;
-      }
-      .orange {
-        color: #d97706;
-      }
       .red {
         color: #b91c1c;
       }
-
-      .error-box {
-        display: flex;
-        align-items: flex-start;
-        gap: 9px;
-        margin: 0;
-        padding: 11px 12px;
-        border-radius: 9px;
-        color: #b91c1c;
-        background: #fef2f2;
-        line-height: 1.4;
-      }
-
-      .rows {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-      }
-      .row {
-        min-height: 40px;
-        display: flex;
-        align-items: center;
-        gap: 9px;
-        border-top: 1px solid #e4e4e4;
-      }
-      .row-count {
-        margin-left: auto;
-        color: #737373;
-        font-variant-numeric: tabular-nums;
-      }
-      .row.pending {
-        color: #858585;
-      }
-      .row .symbol {
-        width: 18px;
-        height: 18px;
-        text-align: center;
-        font-size: 17px;
-      }
-      .row .symbol svg {
-        width: 18px;
-        height: 18px;
-        display: block;
-        fill: none;
-        stroke: currentColor;
-        stroke-width: 2;
-        stroke-linecap: round;
-        stroke-linejoin: round;
-      }
-      .row .symbol .spinner {
+      .spin {
         animation: spin 1s linear infinite;
       }
       @keyframes spin {
@@ -439,361 +314,325 @@
           transform: rotate(360deg);
         }
       }
-
-      .footer {
-        margin-top: auto;
+      .sites {
         display: flex;
         flex-direction: column;
-        gap: 9px;
+        gap: 8px;
       }
-      .button {
-        width: 100%;
-        border-radius: 9px;
-        padding: 10px 13px;
-        border: 1px solid #dedede;
-        background: white;
-        color: #222;
+      .site-button {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 10px 12px;
+        border: 1px solid #e5e5e5;
+        border-radius: 8px;
+        font-weight: 425;
       }
-      .button.primary {
-        background: #1b1b1b;
-        border-color: #1b1b1b;
-        color: white;
-        font-weight: 550;
+      .site-button span {
+        flex: 1;
       }
-
+      .account {
+        display: flex;
+        gap: 8px;
+        padding: 10px 12px;
+        border-radius: 8px;
+        background: #f5f5f5;
+      }
+      .account .icon {
+        margin-top: 1px;
+      }
+      .rows {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      .row {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 0;
+        border-top: 1px solid #e5e5e5;
+      }
+      .row.pending {
+        color: #737373;
+      }
+      .count {
+        margin-left: auto;
+        color: #737373;
+        font-variant-numeric: tabular-nums;
+      }
       .stats {
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: 8px;
+        color: #737373;
+        font-size: 12px;
       }
       .stat {
-        flex: 1;
-        min-width: 0;
-        border-radius: 9px;
-        background: #f3f3f3;
-        padding: 10px;
-        color: #777;
-        font-size: 11px;
+        border-radius: 8px;
+        background: #f5f5f5;
+        padding: 8px 10px;
       }
       .stat b {
         display: block;
-        color: #1d1d1d;
-        font-size: 22px;
-        margin-bottom: 2px;
+        color: #171717;
+        font-size: 20px;
+        font-weight: 450;
+        line-height: 1.4;
       }
+      .footer {
+        margin-top: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      .button {
+        width: 100%;
+        border-radius: 8px;
+        padding: 8px 12px;
+        border: 1px solid #e5e5e5;
+        background: white;
+        color: #171717;
+      }
+      .button.primary {
+        background: #171717;
+        border-color: #171717;
+        color: white;
+      }
+
+      /* The caption on the page */
       .story-label {
         position: absolute;
         z-index: 2;
         left: 54px;
         bottom: 34px;
-        max-width: 470px;
+        max-width: 480px;
         padding: 16px 19px;
         border-radius: 13px;
-        color: white;
-        background: rgba(20, 20, 20, 0.94);
+        color: #f4f0f1;
+        background: rgba(118, 71, 111, 0.97);
         box-shadow: 0 12px 32px rgba(0, 0, 0, 0.22);
       }
       .story-label b {
         display: block;
         margin-bottom: 3px;
-        font-size: 17px;
+        font-size: 18px;
+        font-weight: 500;
       }
       .story-label span {
-        color: #c9c9c9;
-        font-size: 12px;
-      }
-
-      .shot-progress .story-label {
-        background: rgba(190, 75, 0, 0.96);
-      }
-      .shot-progress .story-label span {
-        color: #ffe2cf;
-      }
-      .shot-done .story-label {
-        background: rgba(22, 101, 52, 0.96);
-      }
-      .shot-done .story-label span {
-        color: #d4f7df;
-      }
-      .shot-error .story-label {
-        background: rgba(153, 27, 27, 0.96);
-      }
-      .shot-error .story-label span {
-        color: #fee2e2;
+        color: #e2dcde;
+        font-size: 13px;
       }
     </style>
   </head>
   <body>
-    <div class="shot" id="shot">
+    <div class="shot">
       <div class="browser">
-        <div class="chrome">
-          <div class="tabbar">
-            <div class="traffic"><i></i><i></i><i></i></div>
-            <div class="tab">
-              <img src="../../public/icon/32.png" alt="" /><span>Мои фильмы — Кинопоиск</span
-              ><span class="x">×</span>
-            </div>
-            <span class="new-tab">+</span>
-          </div>
-          <div class="omnibar-row">
-            <div class="nav">‹ › ↻</div>
-            <div class="omnibar"><span class="lock">●</span>kinopoisk.ru/user/123456/votes/</div>
-            <div class="toolbar-icon">
-              <img src="../../public/icon/32.png" alt="Kinopoisk Export" />
-            </div>
-            <div class="avatar">A</div>
-            <div style="font-size: 22px; color: #666">⋮</div>
-          </div>
-        </div>
-
         <div class="content">
-          <section class="site">
-            <div class="site-header">
-              <div class="kp-brand"><i>Кино</i>поиск</div>
-              <div class="site-nav">
-                <span>Фильмы</span><span>Сериалы</span><span>Моё кино</span>
-              </div>
-            </div>
-            <div class="library">
-              <div class="eyebrow">Личная коллекция</div>
-              <h2>Мои фильмы</h2>
-              <p class="library-lead">Оценки, просмотры и сохранённые фильмы.</p>
-              <div class="filter-row">
-                <span class="chip active">Оценки</span><span class="chip">Просмотры</span
-                ><span class="chip">Буду смотреть</span><span class="chip">Любимые фильмы</span>
-              </div>
-              <div class="movie-list">
-                <div class="movie">
-                  <div class="poster"></div>
-                  <div><b>Интерстеллар</b><small>Interstellar · 2014</small></div>
-                  <div class="rating">9</div>
-                </div>
-                <div class="movie">
-                  <div class="poster"></div>
-                  <div><b>Дюна: Часть вторая</b><small>Dune: Part Two · 2024</small></div>
-                  <div class="rating">8</div>
-                </div>
-                <div class="movie">
-                  <div class="poster"></div>
-                  <div><b>Извне</b><small>From · 2022</small></div>
-                  <div class="rating">8</div>
-                </div>
-                <div class="movie">
-                  <div class="poster"></div>
-                  <div><b>Орудия</b><small>Weapons · 2025</small></div>
-                  <div class="rating">7</div>
-                </div>
-                <div class="movie">
-                  <div class="poster"></div>
-                  <div><b>Разделение</b><small>Severance · 2022</small></div>
-                  <div class="rating">9</div>
-                </div>
-              </div>
-            </div>
-            <div class="story-label" id="story"></div>
-          </section>
-
+          <section class="site" id="site"></section>
           <aside class="side-panel">
-            <div class="panel-top">
-              <img src="../../public/icon/32.png" alt="" /><b>Kinopoisk Export</b
-              ><span class="close">×</span>
-            </div>
             <main class="panel" id="panel"></main>
           </aside>
         </div>
       </div>
     </div>
 
-    <template id="ready">
-      <h1>Kinopoisk Export</h1>
-      <p class="lead">Saves your library to a JSON file. Takes a few minutes.</p>
-      <div class="account">
-        <span class="mark green">✓</span><span>Signed in on kinopoisk.ru</span>
+    <template id="letterboxd-page">
+      <div class="lb-header">
+        <div class="lb-brand">Letterboxd</div>
+        <div class="lb-nav"><span>Films</span><span>Lists</span><span>Members</span></div>
       </div>
-      <ul class="rows">
-        <li class="row">
-          <span class="symbol">
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <path
-                d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"
-              />
-            </svg>
-          </span>
-          Ratings
-        </li>
-        <li class="row">
-          <span class="symbol">
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <path
-                d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"
-              />
-              <circle cx="12" cy="12" r="3" />
-            </svg>
-          </span>
-          Watched titles
-        </li>
-        <li class="row">
-          <span class="symbol">
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <circle cx="12" cy="12" r="10" />
-              <path d="M12 6v6l4 2" />
-            </svg>
-          </span>
-          Watch later
-        </li>
-        <li class="row">
-          <span class="symbol">
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <path
-                d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"
-              />
-            </svg>
-          </span>
-          Favorites
-        </li>
-      </ul>
-      <div class="footer"><button class="button primary">Export library</button></div>
+      <div class="lb-page">
+        <h2>Diary</h2>
+        <div class="lb-tabs">
+          <span>Profile</span><span>Films</span><span class="active">Diary</span
+          ><span>Watchlist</span>
+        </div>
+        <div class="diary-row">
+          <div class="diary-day">24</div>
+          <div class="poster" style="background: linear-gradient(145deg, #3c2a1a, #d8a25a)"></div>
+          <div><b>Dune: Part Two</b></div>
+          <div>2024</div>
+          <div class="stars">★★★★½</div>
+        </div>
+        <div class="diary-row">
+          <div class="diary-day">21</div>
+          <div class="poster" style="background: linear-gradient(145deg, #1f3a4a, #9cc3d0)"></div>
+          <div><b>Past Lives</b></div>
+          <div>2023</div>
+          <div class="stars">★★★★★</div>
+        </div>
+        <div class="diary-row">
+          <div class="diary-day">14</div>
+          <div class="poster" style="background: linear-gradient(145deg, #2a1c18, #c4683c)"></div>
+          <div><b>Oppenheimer</b></div>
+          <div>2023</div>
+          <div class="stars">★★★★</div>
+        </div>
+        <div class="diary-row">
+          <div class="diary-day">09</div>
+          <div class="poster" style="background: linear-gradient(145deg, #17323c, #6fb0b8)"></div>
+          <div><b>Aftersun</b></div>
+          <div>2022</div>
+          <div class="stars">★★★★½</div>
+        </div>
+        <div class="diary-row">
+          <div class="diary-day">02</div>
+          <div class="poster" style="background: linear-gradient(145deg, #23301f, #9fb57a)"></div>
+          <div><b>Perfect Days</b></div>
+          <div>2023</div>
+          <div class="stars">★★★★</div>
+        </div>
+      </div>
+      <div class="story-label" id="story"></div>
     </template>
 
-    <template id="progress">
-      <h1>Exporting…</h1>
-      <p class="lead">Keep this panel open.</p>
-      <ul class="rows">
-        <li class="row">
-          <span class="symbol green">
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M20 6 9 17l-5-5" />
-            </svg>
-          </span>
-          Watched titles<span class="row-count">142</span>
-        </li>
-        <li class="row">
-          <span class="symbol green">
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M20 6 9 17l-5-5" />
-            </svg>
-          </span>
-          Ratings<span class="row-count">78</span>
-        </li>
-        <li class="row">
-          <span class="symbol green">
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M20 6 9 17l-5-5" />
-            </svg>
-          </span>
-          Watch later<span class="row-count">65</span>
-        </li>
-        <li class="row">
-          <span class="symbol blue">
-            <svg class="spinner" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M21 12a9 9 0 1 1-6.219-8.56" />
-            </svg>
-          </span>
-          Favorites<span class="row-count">18 of 27</span>
-        </li>
-        <li class="row pending">
-          <span class="symbol">
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <circle cx="12" cy="12" r="10" />
-            </svg>
-          </span>
-          TMDB IDs<span class="row-count"></span>
-        </li>
-      </ul>
-      <div class="footer"><button class="button">Cancel</button></div>
-    </template>
-
-    <template id="done">
-      <h1>Export saved</h1>
-      <p class="lead">kinopoisk-library.json is in your downloads.</p>
-      <div class="stats">
-        <div class="stat"><b>78</b>Ratings</div>
-        <div class="stat"><b>64</b>Seen</div>
-        <div class="stat"><b>65</b>Watch later</div>
-        <div class="stat"><b>27</b>Favorites</div>
+    <template id="kinopoisk-page">
+      <div class="kp-header">
+        <div class="kp-brand"><i>Кино</i>поиск</div>
+        <div class="kp-nav"><span>Фильмы</span><span>Сериалы</span><span>Моё кино</span></div>
       </div>
-      <div class="footer">
-        <button class="button primary">Download again</button
-        ><button class="button">Start over</button>
+      <div class="library">
+        <div class="eyebrow">Личная коллекция</div>
+        <h2>Мои фильмы</h2>
+        <p class="library-lead">Оценки, просмотры и сохранённые фильмы.</p>
+        <div class="filter-row">
+          <span class="chip active">Оценки</span><span class="chip">Просмотры</span
+          ><span class="chip">Буду смотреть</span><span class="chip">Любимые фильмы</span>
+        </div>
+        <div class="movie">
+          <div class="poster" style="background: linear-gradient(145deg, #303030, #ff6b00)"></div>
+          <div><b>Интерстеллар</b><small>Interstellar · 2014</small></div>
+          <div class="kp-rating">9</div>
+        </div>
+        <div class="movie">
+          <div class="poster" style="background: linear-gradient(145deg, #b68f63, #202020)"></div>
+          <div><b>Дюна: Часть вторая</b><small>Dune: Part Two · 2024</small></div>
+          <div class="kp-rating">8</div>
+        </div>
+        <div class="movie">
+          <div class="poster" style="background: linear-gradient(145deg, #25394a, #7899a8)"></div>
+          <div><b>Извне</b><small>From · 2022</small></div>
+          <div class="kp-rating">8</div>
+        </div>
+        <div class="movie">
+          <div class="poster" style="background: linear-gradient(145deg, #531a16, #e6a447)"></div>
+          <div><b>Орудия</b><small>Weapons · 2025</small></div>
+          <div class="kp-rating">7</div>
+        </div>
+        <div class="movie">
+          <div class="poster" style="background: linear-gradient(145deg, #1f211f, #78836c)"></div>
+          <div><b>Разделение</b><small>Severance · 2022</small></div>
+          <div class="kp-rating">9</div>
+        </div>
       </div>
-    </template>
-
-    <template id="error">
-      <h1>Export stopped</h1>
-      <p class="error-box">
-        <span class="mark red">⚠</span
-        ><span>Kinopoisk shows a captcha. Open kinopoisk.ru, solve it, then try again.</span>
-      </p>
-      <ul class="rows">
-        <li class="row">
-          <span class="symbol green">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5" /></svg>
-          </span>
-          Watched titles<span class="row-count">142</span>
-        </li>
-        <li class="row">
-          <span class="symbol green">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5" /></svg>
-          </span>
-          Ratings<span class="row-count">78</span>
-        </li>
-        <li class="row">
-          <span class="symbol red">
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M18 6 6 18M6 6l12 12" />
-            </svg>
-          </span>
-          Watch later
-        </li>
-        <li class="row pending">
-          <span class="symbol">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" /></svg>
-          </span>
-          Favorites
-        </li>
-        <li class="row pending">
-          <span class="symbol">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" /></svg>
-          </span>
-          TMDB IDs
-        </li>
-      </ul>
-      <div class="footer">
-        <button class="button">Open kinopoisk.ru</button
-        ><button class="button primary">Try again</button>
-      </div>
+      <div class="story-label" id="story"></div>
     </template>
 
     <script>
-      const states = {
-        ready: {
-          story:
-            '<b>Your library, ready to move.</b><span>Ratings, watched titles, watch later and favorites — exported from one place.</span>',
-          className: 'shot-ready',
+      // Lucide icons, as the side panel draws them.
+      const ICONS = {
+        arrowLeft: '<path d="m12 19-7-7 7-7"/><path d="M19 12H5"/>',
+        chevronRight: '<path d="m9 18 6-6-6-6"/>',
+        check: '<path d="M20 6 9 17l-5-5"/>',
+        circle: '<circle cx="12" cy="12" r="10"/>',
+        loader: '<path d="M21 12a9 9 0 1 1-6.219-8.56"/>',
+        x: '<path d="M18 6 6 18"/><path d="m6 6 12 12"/>',
+        alert:
+          '<path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/>',
+        calendarCheck:
+          '<path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/><path d="m9 16 2 2 4-4"/>',
+        eye: '<path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"/><circle cx="12" cy="12" r="3"/>',
+        clock: '<circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>',
+        star: '<path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/>',
+        heart:
+          '<path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>',
+      }
+      const icon = (name, className = '') =>
+        `<svg class="icon ${className}" viewBox="0 0 24 24" aria-hidden="true">${ICONS[name]}</svg>`
+
+      const header = (title, back = true) =>
+        `<header>${back ? `<span class="back">${icon('arrowLeft')}</span>` : ''}<h1>${title}</h1></header>`
+      const row = (iconHtml, label, count = '', pending = false) =>
+        `<li class="row${pending ? ' pending' : ''}">${iconHtml}${label}<span class="count">${count}</span></li>`
+      const done = (label, count) => row(icon('check', 'green'), label, count)
+      const pending = (label) => row(icon('circle'), label, '', true)
+
+      const SITES = {
+        letterboxd: {
+          page: 'letterboxd-page',
         },
-        progress: {
-          story:
-            '<b>Clear progress, no surprises.</b><span>Lists are fetched one at a time, with every step visible.</span>',
-          className: 'shot-progress',
-        },
-        done: {
-          story:
-            '<b>One portable JSON file.</b><span>Your data is built in the browser and saved directly to Downloads.</span>',
-          className: 'shot-done',
-        },
-        error: {
-          story:
-            '<b>Helpful when something gets in the way.</b><span>See exactly where the export stopped, fix the issue and try again.</span>',
-          className: 'shot-error',
+        kinopoisk: {
+          page: 'kinopoisk-page',
         },
       }
-      const state = new URLSearchParams(location.search).get('shot') || 'ready'
-      const config = states[state] || states.ready
-      document.body.className = config.className
-      document
-        .querySelector('#panel')
-        .append(document.querySelector(`#${state}`).content.cloneNode(true))
-      document.querySelector('#story').innerHTML = config.story
+
+      const SHOTS = {
+        pick: {
+          site: 'letterboxd',
+          story:
+            '<b>Letterboxd or Kinopoisk</b><span>Pick the site your library is on. You get one file to import into Foyerr.</span>',
+          panel: `${header('Foyerr Import Helper', false)}
+            <p class="lead muted">Pick the site your library is on. You'll get a file to import into Foyerr.</p>
+            <div class="sites">
+              <div class="site-button"><span>Letterboxd</span>${icon('chevronRight', 'muted')}</div>
+              <div class="site-button"><span>Kinopoisk</span>${icon('chevronRight', 'muted')}</div>
+            </div>`,
+        },
+        'letterboxd-progress': {
+          site: 'letterboxd',
+          story:
+            '<b>Every diary entry, with its date</b><span>The panel reads your diary, films and watchlist one page at a time and shows where it is.</span>',
+          panel: `${header('Exporting…', false)}
+            <p class="lead muted">Keep this panel open.</p>
+            <ul class="rows">
+              ${done('Diary', '412')}
+              ${row(icon('loader', 'blue spin'), 'Films', 'page 14 of 23')}
+              ${pending('Watchlist')}
+              ${pending('TMDB IDs')}
+            </ul>
+            <div class="footer"><button class="button">Cancel</button></div>`,
+        },
+        'letterboxd-done': {
+          site: 'letterboxd',
+          story:
+            '<b>One file for Foyerr</b><span>Ratings, watches and your watchlist with TMDB IDs, saved to your downloads.</span>',
+          panel: `${header('Export saved')}
+            <p class="lead muted">letterboxd-library.json is in your downloads.</p>
+            <div class="stats">
+              <div class="stat"><b>401</b>Ratings</div>
+              <div class="stat"><b>11</b>Watches</div>
+              <div class="stat"><b>6</b>Seen</div>
+              <div class="stat"><b>127</b>Watchlist</div>
+            </div>
+            <div class="footer">
+              <button class="button primary">Download again</button>
+              <button class="button">Start over</button>
+            </div>`,
+        },
+        'kinopoisk-ready': {
+          site: 'kinopoisk',
+          story:
+            '<b>Kinopoisk too</b><span>Ratings, watches, watchlist and favorites, with the dates from your pages.</span>',
+          panel: `${header('Kinopoisk Export')}
+            <div class="account">${icon('check', 'green')}<span>Signed in on kinopoisk.ru</span></div>
+            <ul class="rows">
+              ${row(icon('eye'), 'Watches')}
+              ${row(icon('star'), 'Ratings')}
+              ${row(icon('clock'), 'Watchlist')}
+              ${row(icon('heart'), 'Favorites')}
+            </ul>
+            <div class="footer"><button class="button primary">Export library</button></div>`,
+        },
+      }
+
+      const shot = SHOTS[new URLSearchParams(location.search).get('shot')] ?? SHOTS.pick
+      const site = SITES[shot.site]
+      const siteElement = document.querySelector('#site')
+      siteElement.className = `site ${shot.site}`
+      siteElement.append(document.querySelector(`#${site.page}`).content.cloneNode(true))
+      document.querySelector('#story').innerHTML = shot.story
+      document.querySelector('#panel').innerHTML = shot.panel
     </script>
   </body>
 </html>
