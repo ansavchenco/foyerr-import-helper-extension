@@ -1,8 +1,8 @@
 {
   "name": "kinopoisk-export-ext",
-  "description": "Exports your Kinopoisk, Letterboxd or IMDb library to a file importable to Foyerr.",
+  "description": "Exports your IMDb, Letterboxd or Kinopoisk library to a file importable to Foyerr.",
   "private": true,
-  "version": "1.2.0",
+  "version": "1.3.0",
   "type": "module",
   "scripts": {
     "dev": "wxt",
