@@ -11,8 +11,8 @@ type Row = Record<string, { value: string } | undefined>
 
 const BATCH_SIZE = 200
 
-// P2603 is the Kinopoisk ID, P6127 the Letterboxd film ID, P4947 the TMDB movie ID and P4983
-// the TMDB series ID.
+// P2603 is the Kinopoisk ID, P6127 the Letterboxd film ID, P345 the IMDb ID, P4947 the TMDB
+// movie ID and P4983 the TMDB series ID.
 async function runQuery(query: string, signal: AbortSignal): Promise<Row[]> {
   let response: Response
   try {
@@ -80,6 +80,11 @@ export function fetchTmdbIds(kinopoiskIds: string[], signal: AbortSignal) {
 /** Looks up the TMDB IDs of Letterboxd film slugs, like `interstellar`, in Wikidata. */
 export function fetchTmdbIdsByLetterboxdSlug(slugs: string[], signal: AbortSignal) {
   return fetchTmdbIdsByProperty('P6127', slugs, signal)
+}
+
+/** Looks up the TMDB IDs of IMDb IDs, like `tt0816692`, in Wikidata. */
+export function fetchTmdbIdsByImdbId(imdbIds: string[], signal: AbortSignal) {
+  return fetchTmdbIdsByProperty('P345', imdbIds, signal)
 }
 
 /** Lets "Ёлки" and "елки" compare as the same title. */

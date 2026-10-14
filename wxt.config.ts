@@ -12,6 +12,7 @@ export default defineConfig({
     host_permissions: [
       'https://*.kinopoisk.ru/*',
       'https://letterboxd.com/*',
+      'https://*.imdb.com/*',
       'https://query.wikidata.org/*',
     ],
   },

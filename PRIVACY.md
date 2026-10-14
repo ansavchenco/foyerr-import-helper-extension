@@ -1,20 +1,21 @@
 # Privacy Policy for Foyerr Import Helper
 
-Effective date: October 11, 2026
+Effective date: October 14, 2026
 
-Foyerr Import Helper is a browser extension that exports a user’s Kinopoisk ratings, watched titles, watch later list, and favorites, or a user’s Letterboxd diary, ratings, watched films, and watchlist, to a JSON file.
+Foyerr Import Helper is a browser extension that exports a user’s Kinopoisk ratings, watched titles, watch later list, and favorites, a user’s Letterboxd diary, ratings, watched films, and watchlist, or a user’s IMDb ratings, watch history, and watchlist, to a JSON file.
 
 ## Data handled by the extension
 
 To perform an export, the extension processes:
 
-- the numeric identifier of the signed-in Kinopoisk account, or the username of the signed-in Letterboxd account;
+- the numeric identifier of the signed-in Kinopoisk account, the username of the signed-in Letterboxd account, or the username or display name of the signed-in IMDb account;
 - the user’s Kinopoisk ratings, watched status, watch later list, favorites, and associated dates;
 - the user’s Letterboxd diary entries, ratings, watched films, watchlist, and associated dates, including the watchlist CSV that Letterboxd offers on the watchlist page;
-- title information including names, years, media types, Kinopoisk IDs, and Letterboxd film identifiers;
-- the user’s existing Kinopoisk or Letterboxd authentication session, which the browser automatically supplies to that site.
+- the user’s IMDb ratings, watch history, watchlist, and associated dates;
+- title information including names, years, media types, Kinopoisk IDs, Letterboxd film identifiers, and IMDb IDs;
+- the user’s existing Kinopoisk, Letterboxd, or IMDb authentication session, which the browser automatically supplies to that site.
 
-The extension does not ask for or read the user’s Kinopoisk or Letterboxd password. It does not inspect, copy, export, or store authentication cookie values.
+The extension does not ask for or read the user’s Kinopoisk, Letterboxd, or IMDb password. It does not inspect, copy, export, or store authentication cookie values.
 
 ## How the data is used
 
@@ -34,11 +35,15 @@ The extension communicates with:
 
    Requests to Letterboxd retrieve the user’s own diary, films, and watchlist pages and the watchlist CSV using the browser’s existing signed-in session. For films that Wikidata does not identify, the extension also retrieves the public page of the film to read its TMDB ID.
 
-3. Wikidata Query Service at https://query.wikidata.org
+3. IMDb at https://api.graphql.imdb.com
 
-   The extension sends Kinopoisk title IDs or Letterboxd film identifiers and, for Kinopoisk, when necessary, title names and years to find corresponding TMDB IDs. It does not send the user’s account ID or username, ratings, watched dates, list membership, or authentication cookies to Wikidata.
+   Requests to IMDb retrieve the user’s own account name, ratings, watch history, and watchlist through the GraphQL API that the IMDb website uses, with the browser’s existing signed-in session.
 
-Network requests use HTTPS. The privacy practices of Kinopoisk, Letterboxd, and the Wikimedia Foundation apply to information received by their respective services.
+4. Wikidata Query Service at https://query.wikidata.org
+
+   The extension sends Kinopoisk title IDs, Letterboxd film identifiers, or IMDb IDs and, for Kinopoisk, when necessary, title names and years to find corresponding TMDB IDs. It does not send the user’s account ID or username, ratings, watched dates, list membership, or authentication cookies to Wikidata.
+
+Network requests use HTTPS. The privacy practices of Kinopoisk, Letterboxd, IMDb, and the Wikimedia Foundation apply to information received by their respective services.
 
 ## Storage and retention
 

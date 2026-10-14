@@ -5,10 +5,12 @@ import {
   StarIcon,
   ViewIcon,
 } from '@hugeicons/core-free-icons'
+import { fetchUsername as fetchImdbUsername } from '@/utils/imdb'
 import { fetchUserId } from '@/utils/kinopoisk'
 import { fetchUsername } from '@/utils/letterboxd'
 import type { ExportResult, OnStep } from './export'
 import type { IconData } from './Icon'
+import * as imdb from './imdb-library'
 import * as kinopoisk from './kinopoisk-library'
 import * as letterboxd from './letterboxd-library'
 
@@ -36,6 +38,28 @@ export interface Source {
 }
 
 export const SOURCES: Source[] = [
+  {
+    name: 'IMDb',
+    host: 'imdb.com',
+    url: 'https://www.imdb.com/',
+    fileName: 'imdb-library.json',
+    steps: [
+      { step: 'ratings', label: 'Ratings', icon: StarIcon },
+      { step: 'watched', label: 'Watch history', icon: ViewIcon },
+      { step: 'watchlist', label: 'Watchlist', icon: Clock01Icon },
+      { step: 'tmdb', label: 'TMDB IDs' },
+    ],
+    stats: [
+      { key: 'ratings', label: 'Ratings' },
+      { key: 'seen', label: 'Seen' },
+      { key: 'watchlist', label: 'Watchlist' },
+    ],
+    checkAccount: async (signal) => {
+      const username = await fetchImdbUsername(signal)
+      return { account: username, text: `Signed in on imdb.com as ${username}` }
+    },
+    exportLibrary: imdb.exportLibrary,
+  },
   {
     name: 'Letterboxd',
     host: 'letterboxd.com',
